@@ -82,7 +82,7 @@ public class GetNewsFromInternetTask extends AsyncTask<String,Integer,String> {
             try {
                 int timeoutMs = 1500;
                 Socket sock = new Socket();
-                SocketAddress sockaddr = new InetSocketAddress("8.8.8.8", 80);
+                SocketAddress sockaddr = new InetSocketAddress("8.8.8.8", 53);
 
                 sock.connect(sockaddr, timeoutMs);
                 sock.close();
