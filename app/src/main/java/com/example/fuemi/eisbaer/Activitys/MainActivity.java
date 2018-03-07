@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     ViewFlipper vf;
+    FloatingActionButton fab;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -111,16 +112,21 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_newGame) {
             // Handle the camera action
             vf.setDisplayedChild(1);
+            fab.setVisibility(View.INVISIBLE);
         } else if (id == R.id.nav_friends) {
             vf.setDisplayedChild(2);
+            fab.setVisibility(View.VISIBLE);
         } else if (id == R.id.nav_news) {
             vf.setDisplayedChild(0);
+            fab.setVisibility(View.VISIBLE);
         } else if (id == R.id.nav_statistiken) {
             vf.setDisplayedChild(3);
+            fab.setVisibility(View.VISIBLE);
         } else if (id == R.id.nav_einstellungen) {
             vf.setDisplayedChild(4);
+            fab.setVisibility(View.VISIBLE);
         } else if (id == R.id.nav_ausloggen) {
-
+            fab.setVisibility(View.VISIBLE);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

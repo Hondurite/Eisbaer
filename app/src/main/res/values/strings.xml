@@ -15,4 +15,5 @@
     <string name="start_offline">Offline starten</string>
     <string name="load_again">Erneut laden</string>
     <string name="no_load_ranglisten">Laden der Ranglisten nicht möglich!</string>
+    <string name="statistic">Statistik</string>
 </resources>
