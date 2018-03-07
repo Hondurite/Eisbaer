@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -127,6 +128,7 @@ public class LadescreenActivity extends AppCompatActivity implements AsyncRespon
         switch(percent){
             case 5: textViewProgressBar.setText(R.string.check_internet_access);break;
             case 10: textViewProgressBar.setText(R.string.load_ranglisten);break;
+            default:
         }
     }
 
@@ -139,6 +141,7 @@ public class LadescreenActivity extends AppCompatActivity implements AsyncRespon
         switch(percent){
             case 5: textViewProgressBar.setText(R.string.no_internet_access);break;
             case 10: textViewProgressBar.setText(R.string.no_load_ranglisten);break;
+            default:
         }
         buttonVerbinden.setVisibility(View.VISIBLE);
         buttonOffline.setVisibility(View.VISIBLE);
@@ -154,6 +157,10 @@ public class LadescreenActivity extends AppCompatActivity implements AsyncRespon
 
     @Override
     public void onUpdateProgress(int percent, int success) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            progessBar.setProgress(percent);
+        }
+        System.out.print(percent);
         if(success == 1){
             progessSuccess(percent);
         }else{

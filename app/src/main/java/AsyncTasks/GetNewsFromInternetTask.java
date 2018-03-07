@@ -34,6 +34,8 @@ public class GetNewsFromInternetTask extends AsyncTask<String,Integer,String> {
 
     private AsyncResponse asyncResponse;
 
+    int percentAfterLoadRanking = 10;
+
     public GetNewsFromInternetTask(Context context, AsyncResponse asyncResponse){
         this.context = context.getApplicationContext();
         this.asyncResponse = asyncResponse;
@@ -155,7 +157,6 @@ public class GetNewsFromInternetTask extends AsyncTask<String,Integer,String> {
 
             input.close();
 
-            System.out.print(buffer);
         } catch (IOException e) {
             e.printStackTrace();
             publishProgress(10,0);
@@ -171,7 +172,23 @@ public class GetNewsFromInternetTask extends AsyncTask<String,Integer,String> {
     @Override
     protected void onPostExecute(String result) {
         // execution of result of Long time consuming operation
+
+
+
+
         if(orderOfMerrit.size() >= 1){
+            //loadProgessBarToHundred, before starting
+            while(percentAfterLoadRanking != 100){
+                percentAfterLoadRanking++;
+                publishProgress(percentAfterLoadRanking,1);
+                try {
+                    // Sleep for 200 milliseconds.
+                    Thread.sleep(200);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+
+                }
+            }
             Intent i = new Intent(context, MainActivity.class);
 
             Bundle b = new Bundle();
