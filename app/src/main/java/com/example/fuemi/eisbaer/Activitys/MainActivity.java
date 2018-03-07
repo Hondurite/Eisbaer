@@ -1,5 +1,6 @@
-package com.example.fuemi.eisbaer;
+package com.example.fuemi.eisbaer.Activitys;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -12,6 +13,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
+
+import com.example.fuemi.eisbaer.R;
+
+import java.util.ArrayList;
+
+import Items.Order;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -40,6 +48,16 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        Intent i = getIntent();
+        Bundle bundle = i.getBundleExtra("OrderOfMerrit");
+        ArrayList<Order> orderOfMerrit = (ArrayList<Order>) bundle.getSerializable("OrderOfMerrit");
+
+        TextView helloWorld = (TextView) findViewById(R.id.main);
+        System.out.print(orderOfMerrit.size());
+        //Funktioniert bei offline starten noch nicht
+        // helloWorld.setText(orderOfMerrit.get(0).getPosition() + " - " + orderOfMerrit.get(0).getName() + " - " + orderOfMerrit.get(0).getPreisgeld());
+
     }
 
     @Override
