@@ -39,6 +39,10 @@ public class GetNewsFromInternetTask extends AsyncTask<String,Integer,String> {
         this.asyncResponse = asyncResponse;
     }
 
+    /*
+        läuft im Hintergrund ab, startet durch .execute aufruf in der Activity
+     */
+
     @Override
     protected String doInBackground(String... strings) {
 
@@ -55,13 +59,22 @@ public class GetNewsFromInternetTask extends AsyncTask<String,Integer,String> {
         return null;
     }
 
+    /*
+        wird durch pubishProgress aufgerufen
+        übergibt Fortschritt über das Interface AsyncResponse an die Activity
+     */
+
     @Override
     protected void onProgressUpdate(Integer... values) {
         asyncResponse.onUpdateProgress(values[0], values[1]);
 
     }
 
-
+    /*
+        sendet einen Ping aufruf an eine netzadresse
+        überprüft so, ob zugriff aufs internet hergestellt werden kann
+        ist ausm internet xD
+     */
 
     // TCP/HTTP/DNS (depending on the port, 53=DNS, 80=HTTP, etc.)
     private boolean checkingForInternetAccess() {
@@ -149,6 +162,12 @@ public class GetNewsFromInternetTask extends AsyncTask<String,Integer,String> {
         }
     }
 
+
+    /*
+        wird ausgeführt, nachdem doInBackground abgeschlossen ist
+        startet neue Activity, wenn die ArrayList orderOfMerrit mindestens 1 Element enthält
+        finish funktioniert noch nicht!
+     */
     @Override
     protected void onPostExecute(String result) {
         // execution of result of Long time consuming operation

@@ -42,6 +42,10 @@ public class LadescreenActivity extends AppCompatActivity implements AsyncRespon
         progessBar = (ProgressBar) findViewById(R.id.progressBarLadescreen);
     }
 
+
+    /*  buttons werden ausgeblendet
+        checked Nach Internetverbindung --> einblenden der Buttons falls nicht verfügbar
+    */
     private void tryLoadingNews() {
 
         buttonOffline.setVisibility(View.INVISIBLE);
@@ -55,6 +59,10 @@ public class LadescreenActivity extends AppCompatActivity implements AsyncRespon
             buttonVerbinden.setVisibility(View.VISIBLE);
         }
     }
+
+    /*
+        initialiseren der Button + button listeners
+     */
 
     private void initButtons() {
         buttonOffline = (Button) findViewById(R.id.buttonLadescreenOffline);
@@ -80,6 +88,13 @@ public class LadescreenActivity extends AppCompatActivity implements AsyncRespon
         textViewProgressBar = (TextView) findViewById(R.id.textViewLadescreen);
     }
 
+    /*
+        überprüft ob Verbindung mit dem Internet hergestellt werden kann
+        wenn ja --> true
+        wenn nein --> false
+     */
+
+
     private boolean checkingForInternetConnection() {
         textViewProgressBar.setText(R.string.check_internet_connection);
         ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -94,11 +109,19 @@ public class LadescreenActivity extends AppCompatActivity implements AsyncRespon
 
     }
 
+    /*
+        startet Asyncronen Task um die Daten aus dem Internet zu laden
+     */
+
     private void loadNews() {
         //Asynk Task starten
         GetNewsFromInternetTask newsTask = new GetNewsFromInternetTask(this, this);
         newsTask.execute();
     }
+
+    /*
+        verändert den dargestellten Text je nach Prozentstand
+     */
 
     private void progessSuccess(int percent){
         switch(percent){
@@ -106,6 +129,11 @@ public class LadescreenActivity extends AppCompatActivity implements AsyncRespon
             case 10: textViewProgressBar.setText(R.string.load_ranglisten);break;
         }
     }
+
+    /*
+            verändert den Text, wenn einer der Ladeschritt nicht erflogreich war
+            blendet die Buttons ein
+     */
 
     private void progressWithoutSuccess(int percent){
         switch(percent){
@@ -116,6 +144,13 @@ public class LadescreenActivity extends AppCompatActivity implements AsyncRespon
         buttonOffline.setVisibility(View.VISIBLE);
     }
 
+
+    /*
+        überschreibt Methode aus dem Interface "Asyncesponse", um Rückmeldung von Asnyc Task "GetNewsFromInternetTask" zu erhalten
+        erhält zum einen die variable percent, die den Fortschritt des Ladevorgangs darstellt
+        erhält die variable int success, diese ist 0, falls ein Problem im Ladevorgang auftritt
+        success ist int statt boolean, da die bestehende Methode onProgressUpdate im Async Task nur Integer sein kann
+     */
 
     @Override
     public void onUpdateProgress(int percent, int success) {
