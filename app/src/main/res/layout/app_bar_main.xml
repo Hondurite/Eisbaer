@@ -19,8 +19,18 @@
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     </android.support.design.widget.AppBarLayout>
+    <ViewFlipper
+        android:id="@+id/viewFlipper"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <include android:id="@+id/news" layout="@layout/content_main"/>
+        <include android:id="@+id/newGame" layout="@layout/content_new_game"/>
+        <include android:id="@+id/Friends" layout="@layout/content_friends"/>
+        <include android:id="@+id/statistics" layout="@layout/content_statistics"/>
+        <include android:id="@+id/einstellungen" layout="@layout/content_einstellungen"/>
+    </ViewFlipper>
 
-    <include layout="@layout/content_main" />
+
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
@@ -28,6 +38,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+        app:srcCompat="@drawable/dartboard_clip_art_small" />
 
 </android.support.design.widget.CoordinatorLayout>

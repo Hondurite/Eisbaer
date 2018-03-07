@@ -13,7 +13,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewStub;
 import android.widget.TextView;
+import android.widget.ViewFlipper;
 
 import com.example.fuemi.eisbaer.R;
 
@@ -24,6 +26,7 @@ import Items.Order;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    ViewFlipper vf;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +38,7 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "Neues Spiel starten", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
@@ -49,14 +52,21 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        Intent i = getIntent();
-        Bundle bundle = i.getBundleExtra("OrderOfMerrit");
-        ArrayList<Order> orderOfMerrit = (ArrayList<Order>) bundle.getSerializable("OrderOfMerrit");
 
-        TextView helloWorld = (TextView) findViewById(R.id.main);
-        System.out.print(orderOfMerrit.size());
+        vf = (ViewFlipper) findViewById(R.id.viewFlipper);
+        Intent i = getIntent();
         //Funktioniert bei offline starten noch nicht
-        // helloWorld.setText(orderOfMerrit.get(0).getPosition() + " - " + orderOfMerrit.get(0).getName() + " - " + orderOfMerrit.get(0).getPreisgeld());
+        if(i.hasExtra("OrderOfMerrit")){
+            Bundle bundle = i.getBundleExtra("OrderOfMerrit");
+            ArrayList<Order> orderOfMerrit = (ArrayList<Order>) bundle.getSerializable("OrderOfMerrit");
+
+            TextView helloWorld = (TextView) findViewById(R.id.main);
+            System.out.print(orderOfMerrit.size());
+
+            helloWorld.setText(orderOfMerrit.get(0).getPosition() + " - " + orderOfMerrit.get(0).getName() + " - " + orderOfMerrit.get(0).getPreisgeld());
+
+        }
+
 
     }
 
@@ -98,17 +108,18 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_newGame) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
+            vf.setDisplayedChild(1);
+        } else if (id == R.id.nav_friends) {
+            vf.setDisplayedChild(2);
+        } else if (id == R.id.nav_news) {
+            vf.setDisplayedChild(0);
+        } else if (id == R.id.nav_statistiken) {
+            vf.setDisplayedChild(3);
+        } else if (id == R.id.nav_einstellungen) {
+            vf.setDisplayedChild(4);
+        } else if (id == R.id.nav_ausloggen) {
 
         }
 
