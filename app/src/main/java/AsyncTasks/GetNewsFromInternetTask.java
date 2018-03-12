@@ -117,18 +117,43 @@ public class GetNewsFromInternetTask extends AsyncTask<String,Integer,String> {
 
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(input, "ISO-8859-1"));
 
+
             boolean getData = false;
             while((newLine = bufferedReader.readLine()) != null){
 
                 //Tabelle Startet
-                if(newLine.contains("Stand")){
+                /*if(newLine.contains("Stand")){
                     getData = true;
                 }
+
                 if(newLine.contains("ranglisten")){
                     getData = false;
+                }*/
+
+                for(int i = 0; i <= 100;i++){
+                    if(newLine.equals("<td>"+i+"</td>")){
+                        //platz
+                        String position = newLine.replaceAll("<td>","");
+                        position = position.replaceAll("</td>","");
+
+                        //Name
+                        newLine = bufferedReader.readLine();
+                        String name = newLine.replaceAll("<td>","");
+                        name = name.replaceAll("</td>","");
+
+                        //Pfund
+                        newLine = bufferedReader.readLine();
+                        String pfund = newLine.replaceAll("<td>","");
+                        pfund = pfund.replaceAll("</td>","");
+                        pfund = pfund.replaceAll("&pound;", "£");
+
+                        orderOfMerrit.add(new Order(position,name,pfund));
+                    }
                 }
-                if(getData & newLine.contains("<tr><td>")){
-                    //split data
+                /*if(getData & newLine.contains("<tr><td>")){
+                    //split data#
+                    System.out.println("inHere");
+                    System.out.println(newLine);
                     String[] seperated = newLine.split("</td><td>");
                     //entfernen der tabellenzeichen
                     //entfernen der leerzeichen
@@ -151,10 +176,10 @@ public class GetNewsFromInternetTask extends AsyncTask<String,Integer,String> {
                     buffer.append(seperated[1]);
                     buffer.append(seperated[2]);
                     buffer.append("\n");
-                }
+
+                }*/
 
             }
-
             input.close();
 
         } catch (IOException e) {
@@ -175,20 +200,22 @@ public class GetNewsFromInternetTask extends AsyncTask<String,Integer,String> {
 
 
 
-
         if(orderOfMerrit.size() >= 1){
+
+            System.out.println("orderOf Merrit >= 1");
             //loadProgessBarToHundred, before starting
-            while(percentAfterLoadRanking != 100){
+            /*while(percentAfterLoadRanking != 100){
                 percentAfterLoadRanking++;
-                publishProgress(percentAfterLoadRanking,1);
                 try {
                     // Sleep for 200 milliseconds.
                     Thread.sleep(200);
+                    asyncResponse.onUpdateProgress(percentAfterLoadRanking,1);
+
                 } catch (InterruptedException e) {
                     e.printStackTrace();
 
                 }
-            }
+            }*/
             Intent i = new Intent(context, MainActivity.class);
 
             Bundle b = new Bundle();

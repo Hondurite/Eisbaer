@@ -2,6 +2,7 @@ package com.example.fuemi.eisbaer.Activitys;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
@@ -25,6 +26,8 @@ public class LadescreenActivity extends AppCompatActivity implements AsyncRespon
     Button buttonOffline;
     Button buttonVerbinden;
 
+    SharedPreferences sd;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,14 +36,38 @@ public class LadescreenActivity extends AppCompatActivity implements AsyncRespon
 
         initTextViews();
         initButtons();
-        initProgressBar();
-        tryLoadingNews();
 
+        initProgressBar();
+        checkLogin();
+
+
+    }
+
+
+
+
+
+    private void checkLogin() {
+
+        //checkIfAngemeldet
+        //--> Nein, Login/Registrieren Seite
+        sd = getSharedPreferences("Login", Context.MODE_PRIVATE);
+        System.out.println(sd.getBoolean("LoggedIn",false));
+        System.out.println(sd.getString("Gast",""));
+        if(!sd.getBoolean("LoggedIn", false) && !sd.getString("Gast", "").equals("Gast")){
+            Intent i = new Intent(LadescreenActivity.this, LoginActivity.class);
+            startActivity(i);
+            finish();
+        }else{
+
+            tryLoadingNews();
+        }
 
     }
 
     private void initProgressBar() {
         progessBar = (ProgressBar) findViewById(R.id.progressBarLadescreen);
+        progessBar.setMax(100);
     }
 
 
@@ -128,7 +155,7 @@ public class LadescreenActivity extends AppCompatActivity implements AsyncRespon
         switch(percent){
             case 5: textViewProgressBar.setText(R.string.check_internet_access);break;
             case 10: textViewProgressBar.setText(R.string.load_ranglisten);break;
-            default:
+            default: break;
         }
     }
 
@@ -141,7 +168,7 @@ public class LadescreenActivity extends AppCompatActivity implements AsyncRespon
         switch(percent){
             case 5: textViewProgressBar.setText(R.string.no_internet_access);break;
             case 10: textViewProgressBar.setText(R.string.no_load_ranglisten);break;
-            default:
+            default: break;
         }
         buttonVerbinden.setVisibility(View.VISIBLE);
         buttonOffline.setVisibility(View.VISIBLE);
@@ -157,10 +184,8 @@ public class LadescreenActivity extends AppCompatActivity implements AsyncRespon
 
     @Override
     public void onUpdateProgress(int percent, int success) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            progessBar.setProgress(percent);
-        }
-        System.out.print(percent);
+        progessBar.setProgress(percent);
+        System.out.println(percent);
         if(success == 1){
             progessSuccess(percent);
         }else{

@@ -19,6 +19,12 @@ public class Order implements Serializable {
         preisgeld = order[2];
     }
 
+    public Order(String position, String name, String preisgeld){
+        this.position = position;
+        this.name = name;
+        this.preisgeld = preisgeld;
+    }
+
     public String getPosition() {
         return position;
     }

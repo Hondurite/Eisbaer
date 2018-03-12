@@ -29,10 +29,6 @@
             android:id="@+id/nav_ausloggen"
             android:icon="@android:drawable/btn_dialog"
             android:title="Ausloggen" />
-        <item
-            android:id="@+id/nav_einloggen"
-            android:icon="@drawable/ic_menu_send"
-            android:title="Einloggen" />
     </group>
 
 

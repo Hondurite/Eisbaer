@@ -1,9 +1,12 @@
 package com.example.fuemi.eisbaer.Activitys;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.view.MenuItemCompat;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -28,6 +31,9 @@ public class MainActivity extends AppCompatActivity
 
     ViewFlipper vf;
     FloatingActionButton fab;
+    SharedPreferences sd;
+
+    boolean guest = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +50,14 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+        sd = getSharedPreferences("Login", Context.MODE_PRIVATE);
+        System.out.println(sd.getString("Gast", ""));
+        System.out.println(sd.getBoolean("LoggedIn", true));
+        guest = sd.getString("Gast", "").equals("Gast");
+        System.out.println(guest);
+
+
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -51,7 +65,17 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.getMenu().clear();
+        if(guest){
+
+            navigationView.inflateMenu(R.menu.activity_main_drawer_guest);
+        }else{
+            navigationView.inflateMenu(R.menu.activity_main_drawer_no_guest);
+        }
+
         navigationView.setNavigationItemSelectedListener(this);
+
+
 
 
         vf = (ViewFlipper) findViewById(R.id.viewFlipper);
@@ -71,6 +95,8 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -85,6 +111,8 @@ public class MainActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+
+
         return true;
     }
 
@@ -126,11 +154,36 @@ public class MainActivity extends AppCompatActivity
             vf.setDisplayedChild(4);
             fab.setVisibility(View.VISIBLE);
         } else if (id == R.id.nav_ausloggen) {
-            fab.setVisibility(View.VISIBLE);
+            logOut();
+        } else if (id == R.id.nav_einloggen) {
+            logIn();
         }
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void logIn() {
+        sd = getSharedPreferences("Login", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sd.edit();
+        editor.putString("Gast", "NoGast");
+        editor.putBoolean("LoggedIn", false);
+        editor.apply();
+        Intent i = new Intent(MainActivity.this, LadescreenActivity.class);
+        startActivity(i);
+        finish();
+    }
+
+    private void logOut() {
+        sd = getSharedPreferences("Login", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sd.edit();
+        editor.putBoolean("LoggedIn", false);
+        editor.putString("Gast", "NoGast");
+        editor.apply();
+        Intent i = new Intent(MainActivity.this, LadescreenActivity.class);
+        startActivity(i);
+        finish();
     }
 }
