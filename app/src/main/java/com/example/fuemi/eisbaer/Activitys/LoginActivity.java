@@ -45,6 +45,7 @@ import static android.Manifest.permission.READ_CONTACTS;
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
     SharedPreferences sd;
+    boolean newRegistration = false;
     /**
      * Id to identity READ_CONTACTS permission request.
      */
@@ -325,6 +326,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         private final String mEmail;
         private final String mPassword;
+        private boolean newRegistration = false;
 
         UserLoginTask(String email, String password) {
             mEmail = email;
@@ -353,6 +355,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     editor.putBoolean("LoggedIn", true);
                     editor.putString("Gast", "NoGast");
                     editor.apply();
+                    newRegistration = false;
                     return true;
                 }else{
                     return false;
@@ -364,6 +367,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 editor.putBoolean("LoggedIn", true);
                 editor.putString("Gast", "NoGast");
                 editor.apply();
+                newRegistration = true;
             }
 
             return true;
@@ -375,9 +379,17 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
 
             if (success) {
-                Intent i = new Intent(LoginActivity.this, LadescreenActivity.class);
-                startActivity(i);
-                finish();
+                if(newRegistration){
+                    //neuesProfil
+                    /*Intent i = new Intent(LoginActivity.this, LadescreenActivity.class);
+                    startActivity(i);
+                    finish();*/
+                }else{
+                    Intent i = new Intent(LoginActivity.this, LadescreenActivity.class);
+                    startActivity(i);
+                    finish();
+                }
+
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();

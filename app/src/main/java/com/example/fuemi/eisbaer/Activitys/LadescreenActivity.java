@@ -40,7 +40,6 @@ public class LadescreenActivity extends AppCompatActivity implements AsyncRespon
         initProgressBar();
         checkLogin();
 
-
     }
 
 

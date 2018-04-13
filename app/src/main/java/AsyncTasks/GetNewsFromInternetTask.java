@@ -120,17 +120,20 @@ public class GetNewsFromInternetTask extends AsyncTask<String,Integer,String> {
 
             boolean getData = false;
             while((newLine = bufferedReader.readLine()) != null){
-
+                System.out.println(newLine);
                 //Tabelle Startet
-                /*if(newLine.contains("Stand")){
+                if(newLine.contains("Stand")){
                     getData = true;
                 }
 
                 if(newLine.contains("ranglisten")){
                     getData = false;
-                }*/
+                }
 
-                for(int i = 0; i <= 100;i++){
+                //zwischenzeitlich war die Internetseite anders aufgebaut
+                // der jetzt auskommentierte Teil hat für das zwischenzeitlich andere html funktioniert
+
+                /*for(int i = 0; i <= 100;i++){
                     if(newLine.equals("<td>"+i+"</td>")){
                         //platz
                         String position = newLine.replaceAll("<td>","");
@@ -149,8 +152,8 @@ public class GetNewsFromInternetTask extends AsyncTask<String,Integer,String> {
 
                         orderOfMerrit.add(new Order(position,name,pfund));
                     }
-                }
-                /*if(getData & newLine.contains("<tr><td>")){
+                }*/
+                if(getData & newLine.contains("<tr><td>")){
                     //split data#
                     System.out.println("inHere");
                     System.out.println(newLine);
@@ -177,7 +180,7 @@ public class GetNewsFromInternetTask extends AsyncTask<String,Integer,String> {
                     buffer.append(seperated[2]);
                     buffer.append("\n");
 
-                }*/
+                }
 
             }
             input.close();
