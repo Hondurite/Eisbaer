@@ -34,6 +34,10 @@
         <activity
             android:name=".Activitys.LoginActivity"
             android:label="@string/title_activity_login"></activity>
+        <activity android:name=".Activitys.GameConfigurationActivity"
+                  android:label="Eisbaer"></activity>
+        <activity android:name=".Activitys.GameActivity"
+                    android:label="Eisbaer"></activity>
     </application>
 
 </manifest>

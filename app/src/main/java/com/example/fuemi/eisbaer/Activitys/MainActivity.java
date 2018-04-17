@@ -5,10 +5,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.view.MenuItemCompat;
-import android.view.View;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -16,7 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.ViewStub;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
@@ -139,8 +137,9 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_newGame) {
             // Handle the camera action
-            vf.setDisplayedChild(1);
-            fab.setVisibility(View.INVISIBLE);
+            //vf.setDisplayedChild(1);
+            //fab.setVisibility(View.INVISIBLE);
+            newGame();
         } else if (id == R.id.nav_friends) {
             vf.setDisplayedChild(2);
             fab.setVisibility(View.VISIBLE);
@@ -185,5 +184,10 @@ public class MainActivity extends AppCompatActivity
         Intent i = new Intent(MainActivity.this, LadescreenActivity.class);
         startActivity(i);
         finish();
+    }
+
+    private void newGame(){
+        Intent i = new Intent(MainActivity.this, GameConfigurationActivity.class);
+        startActivity(i);
     }
 }
