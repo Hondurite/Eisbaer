@@ -48,9 +48,13 @@ public class LadescreenActivity extends AppCompatActivity implements AsyncRespon
 
     private void checkLogin() {
 
+
+        Intent i = new Intent(LadescreenActivity.this, LoginActivity.class);
+        startActivity(i);
+        finish();
         //checkIfAngemeldet
         //--> Nein, Login/Registrieren Seite
-        sd = getSharedPreferences("Login", Context.MODE_PRIVATE);
+        /*sd = getSharedPreferences("Login", Context.MODE_PRIVATE);
         System.out.println(sd.getBoolean("LoggedIn",false));
         System.out.println(sd.getString("Gast",""));
         if(!sd.getBoolean("LoggedIn", false) && !sd.getString("Gast", "").equals("Gast")){
@@ -60,7 +64,7 @@ public class LadescreenActivity extends AppCompatActivity implements AsyncRespon
         }else{
 
             tryLoadingNews();
-        }
+        }*/
 
     }
 

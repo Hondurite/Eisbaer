@@ -37,6 +37,13 @@ import java.util.List;
 
 import com.example.fuemi.eisbaer.R;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import HelpersClasses.JSONParser;
+
 import static android.Manifest.permission.READ_CONTACTS;
 
 /**
@@ -328,6 +335,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         private final String mPassword;
         private boolean newRegistration = false;
 
+        JSONParser jsonParser = new JSONParser();
+
         UserLoginTask(String email, String password) {
             mEmail = email;
             mPassword = password;
@@ -344,9 +353,28 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 return false;
             }
 
+
+            //neues eintragen
+
+            List<NameValuePair> param = new ArrayList<>();
+            param.add(new BasicNameValuePair("EMail", mEmail));
+            param.add(new BasicNameValuePair("Passwort", mPassword));
+
+            JSONObject jsonObject = jsonParser.makeHttpRequest("http://192.168.178.39/db.create.php","POST", param);
+
+            System.out.println(jsonObject.toString());
+           /* try {
+                //int success = jsonObject.getInt("success");
+
+                //if(success == 1){
+
+                //}
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }*/
             //checkIfAccountExists --> true, checkPasswort
             //--> false, registerNew
-            sd = getSharedPreferences("Login", Context.MODE_PRIVATE);
+            /*sd = getSharedPreferences("Login", Context.MODE_PRIVATE);
             //übergang bis server, funktioniert nur für einen Account, bei Anmeldung mit zweiten Account wird erster überschrieben
             if(sd.getString("Email", "").equals(mEmail)){
                //account existiert
@@ -368,7 +396,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 editor.putString("Gast", "NoGast");
                 editor.apply();
                 newRegistration = true;
-            }
+            }*/
 
             return true;
         }
